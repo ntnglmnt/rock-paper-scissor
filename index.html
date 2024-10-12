@@ -34,82 +34,74 @@
             const maxFloored = Math.floor(max);
             let value = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
 
-            if (value == 1) {
+            if (value === 1) {
                 return 'rock'
             }
-
-            else if (value == 2) {
+            else if (value === 2) {
                 return 'paper'
             }
-
             else {
                 return 'scissor'
             }
         }
 
-
         function getPlayerChoice() {
-            
+
             let input = prompt("Choose your weapon");
 
 
-            if (input == 'rock')
+            if (input === 'rock')
                 return 'rock'
-            else if (input == 'paper') {
+            else if (input === 'paper') {
                 return 'paper'
             }
-            else if (input == 'scissor') {
+            else if (input === 'scissor') {
                 return 'scissor'
             }
             else return "Weapon not found, try again!"
         }
 
-        function playRound(computerChoice, playerChoice) {
-
-            
-
-            if ((computerChoice == 'rock' && playerChoice == 'scissor') || (computerChoice == 'scissor' && playerChoice == 'paper') || (computerChoice == 'paper' && playerChoice == 'rock')) {
-                computerScore ++;
-                return console.log('You lost to a machine', computerScore, playerScore)
-                
-            }
-
-            else if (computerChoice === playerChoice) {
-                computerScore ++, playerScore ++;
-                return console.log('Draw', computerScore, playerScore)
-            }
-            else
-                playerScore++ 
-                return console.log('You won!', computerScore, playerScore)
-             
-        }
-
-        let computerScore = 0;
-        let playerScore = 0;
 
         function playGame() {
 
+            function playRound(computerChoice, playerChoice) {
+
+                if ((computerChoice === 'rock' && playerChoice === 'scissor') || (computerChoice === 'scissor' && playerChoice === 'paper') || (computerChoice === 'paper' && playerChoice === 'rock')) {
+                    computerScore++;
+                    return console.log('You lost to a machine', computerScore, playerScore)
+                }
+                else if (computerChoice === playerChoice) {
+                    computerScore++, playerScore++;
+                    return console.log('Draw', computerScore, playerScore)
+                }
+                else
+                    playerScore++
+                return console.log('You won!', computerScore, playerScore)
+            }
+
+            let computerScore = 0;
+            let playerScore = 0;
 
             for (let i = 0; i <= 4; i++) {
 
                 let playerChoice = getPlayerChoice();
-                let computerChoice = getComputerChoice(1,4);
+                let computerChoice = getComputerChoice(1, 4);
                 let roundResult = playRound(playerChoice, computerChoice);
-                
-                if (i==4 && computerScore > playerScore) {
-                    console.log('You lost to a machine...how shameful')
-                }
-                else if (i==4 && playerScore > computerScore) {
-                    console.log('You won against a machine programmed to play rock, paper, scissor...you must be feeling...great?!')
-                }
-                else if (i==4 && playerScore == computerScore) {
-                    console.log('Its uhhh...draw... :/')
-                }
+
+            }
+            if (i == 4 && computerScore > playerScore) {
+                console.log('You lost to a machine...how shameful')
+            }
+            else if (i == 4 && playerScore > computerScore) {
+                console.log('You won against a machine programmed to play rock, paper, scissor...you must be feeling...great?!')
+            }
+            else if (i == 4 && playerScore == computerScore) {
+                console.log('Its uhhh...draw... :/')
             }
         }
 
-        let test = playGame();
-       
+        playGame();
+
 
     </script>
 </body>

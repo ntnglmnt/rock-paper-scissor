@@ -1,63 +1,21 @@
-body {
+.body{
     display: flex;
-    background-color: #203671;
-    flex-direction: column;
-    align-items: center;
-    gap: 45px;
 }
 
-.header {
-display: flex;
+.main {
+    display: flex;
+    gap: 45px
 
-width: 100vw;
-height: 300px;
-justify-content: space-around;
-align-items: center;
+};
+
+.btncontainer {
+    display: flex;
+    height: 200px;
+    width: 400px;
+    gap: 24px;
 }
 
-.logo {
-    display: flex;
-    width: 240px;
-    height: 100px;
-    display: flex;
-    background-color: aquamarine;
-    justify-content: space-around;
-    align-items: center;
-    font-size: large;
-    border: black solid 2px;
-}
-
-
-main {
-    width: 64vw;
-    min-height: 340px;
-    background-color: #031444;
-    gap: 32px;
-}
-
-.anouncementbox {
-    display: flex;
-    min-width: 42vw;
-    height: 220px;
-}
-
-.scoreboard {
-    display: flex;
-    min-width: 42vw;
-    height: 180px;
-}
-
-.buttoncontainer {
-    display: flex;
-    justify-content: space-around;
-    height: 120px;
-    width: 62vw;
-}
-
-.btn {
-    width: 120px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.button {
+    width: 150px;
+    height: 150px;
 }

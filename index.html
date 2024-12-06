@@ -9,25 +9,12 @@
 </head>
 
 <body>
-    <div class="header">
-        <div class="rock logo">rock</div>
-        <div class="paper logo">paper</div>
-        <div class="scissor logo">scissor</div>
-    </div>
-
-    <main>
-        <div class="anouncementbox"></div>
-        <div class="scoreboard"></div>
-    </main>
-
-    <div class="buttoncontainer">
-        <div class="rock btn"><img src="./assets/rocklogo.png" alt="" width="120px"></div>
-        <div class="paper btn"><img src="./assets/paperlogo.png" alt="" width="120px"></div>
-        <div class="scissor btn"><img src="./assets/scissorlogo2.jpeg" alt="" width="120px"></div>
-    </div>
 
     <script>
 
+        const ROCK = 'rock';
+        const PAPER = 'paper';
+        const SCISSORS = 'scissor'
         function getComputerChoice(min, max) {
 
             const minCeiled = Math.ceil(min);
@@ -35,74 +22,123 @@
             let value = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
 
             if (value === 1) {
-                return 'rock'
+                return ROCK
             }
             else if (value === 2) {
-                return 'paper'
+                return PAPER
             }
             else {
-                return 'scissor'
+                return SCISSORS
             }
-        }
+        };
 
-        function getPlayerChoice() {
+        let header = document.createElement("div");
+        document.body.appendChild(header);
+        header.classList.add("header");
 
-            let input = prompt("Choose your weapon");
+        let main = document.createElement("div");
+        document.body.appendChild(main);
+        main.classList.add("main");
 
+        let playerScore = document.createElement("div");
+        main.appendChild(playerScore);
+        playerScore.textContent = 0;
 
-            if (input === 'rock')
-                return 'rock'
-            else if (input === 'paper') {
-                return 'paper'
+        let computerScore = document.createElement("div");
+        main.appendChild(computerScore);
+        computerScore.textContent = 0;
+
+        let btncontainer = document.createElement("div");
+        document.body.appendChild(btncontainer);
+        btncontainer.classList.add("btncontainer");
+
+        //always strict equality instead of ==, change value from string to number.
+        //watch out for duplicate code
+
+        function playRound() {
+
+            let playerChoice = event.target.value;
+            let choiceStorage = getComputerChoice(1, 4);
+
+            console.log('The player chose', playerChoice);
+            console.log('The computer chose', choiceStorage);
+            console.log('FIRST EQUALITY', choiceStorage == PAPER && playerChoice == SCISSORS)
+            console.log('SECOND EQUALITY CHECK', choiceStorage == SCISSORS && playerChoice == ROCK)
+            console.log('THIRD EQUALITY', choiceStorage == ROCK && playerChoice == PAPER)
+            console.log('ELSE IF', playerChoice == choiceStorage)
+
+            if ((choiceStorage == PAPER && playerChoice == SCISSORS) || (choiceStorage == SCISSORS && playerChoice == ROCK) || (choiceStorage == ROCK && playerChoice == PAPER)) {
+                playerScore.textContent++;
+                header.textContent = 'Player won';
+                checkWinner(computerScore.textContent, playerScore.textContent);
             }
-            else if (input === 'scissor') {
-                return 'scissor'
+            else if (playerChoice == choiceStorage) {
+                 header.textContent = 'Draw';
             }
-            else return "Weapon not found, try again!"
-        }
-
-
-        function playGame() {
-
-            let computerScore = 0;
-            let playerScore = 0;
-
-            function playRound(computerChoice, playerChoice) {
-
-                if (computerChoice === playerChoice) {
-                    computerScore++, playerScore++;
-                    return console.log('Draw', computerScore, playerScore)
-                }
-                else if ((computerChoice === 'rock' && playerChoice === 'scissor') || (computerChoice === 'scissor' && playerChoice === 'paper') || (computerChoice === 'paper' && playerChoice === 'rock')) {
-                    computerScore++;
-                    return console.log('You lost to a machine', computerScore, playerScore)
-                }
-                else if ((playerChoice === 'rock' && computerChoice === 'scissor') || (playerChoice === 'scissor' && computerChoice === 'paper') || (playerChoice === 'paper' && computerChoice === 'rock')) {
-                playerScore++
-                return console.log('You won!', computerScore, playerScore)
-                }
-                else console.log('Play stupid games, win stupid prizes', computerScore, playerScore)
-                    
-                }
-
-            for (let i = 0; i <= 4; i++) {
-
-                let playerChoice = getPlayerChoice();
-                let computerChoice = getComputerChoice(1, 4);
-                let roundResult = playRound(playerChoice, computerChoice);
+            else {
+                 header.textContent = 'Computer won', computerScore.textContent++, checkWinner(computerScore.textContent, playerScore.textContent);
             }
-            if (computerScore > playerScore) {
-                console.log('You lost to a machine...how shameful')
+        };
+
+        function checkWinner() {
+            if (computerScore.textContent == 5) {
+
+                alert('Computer won this game!');
+                computerScore.textContent = 0;
+                playerScore.textContent = 0;
             }
-            else if (playerScore > computerScore) {
-                console.log('You won against a machine programmed to play rock, paper, scissor...you must be feeling...great?!')
+            else if (playerScore.textContent == 5) {
+
+                alert('Player won this game!');
+                computerScore.textContent = 0;
+                playerScore.textContent = 0;
             }
-            else if (playerScore == computerScore) {
-                console.log('Its uhhh...draw... :/')
-            }
-        }
-    
-    playGame();
+        };
+
+        let btnrock = document.createElement("button");
+        btnrock.value = ROCK;
+        btnrock.textContent = ROCK;
+        btncontainer.appendChild(btnrock);
+        btnrock.classList.add("btnrock");
+        btnrock.addEventListener("click", playRound);
+
+        let btnpaper = document.createElement("button");
+        btncontainer.appendChild(btnpaper);
+        btnpaper.classList.add("btnpaper");
+        btnpaper.textContent = PAPER;
+        btnpaper.value = PAPER;
+        btnpaper.addEventListener("click", playRound);
+
+        let btnscissors = document.createElement("button");
+        btncontainer.appendChild(btnscissors);
+        btnscissors.classList.add("btnscissors");
+        btnscissors.textContent = SCISSORS;
+        btnscissors.value = SCISSORS;
+        btnscissors.addEventListener("click", playRound);
+
+
+
+
+
+        // function playGame() {
+
+        //     for (let i = 0; i <= 4; i++) {
+
+        //         let playerChoice = getPlayerChoice();
+        //         let computerChoice = getComputerChoice(1, 4);
+        //         let roundResult = playRound(playerChoice, computerChoice);
+        //     }
+        //     if (computerScore > playerScore) {
+        //         console.log('You lost to a machine...how shameful')
+        //     }
+        //     else if (playerScore > computerScore) {
+        //         console.log('You won against a machine programmed to play rock, paper, scissor...you must be feeling...great?!')
+        //     }
+        //     else if (playerScore == computerScore) {
+        //         console.log('Its uhhh...draw... :/')
+        //     }
+        // }
+
 
 
     </script>
